@@ -165,7 +165,7 @@ Attributes:
 * __prefix: <prefix-name>__ will prefix all generated functions/macros names.
 * __macros:__ All operations generated are expressed as macros (except that in the case of a generative type definition the binding of the type descriptor to a variable is done with a "define").
 * __type-exhibitor: <type-exhibitor-name>__ if specified will create a function with no arguments that returns the type descriptor of this type without the need of creating an instance.
-* __implementer: <implementer-name>__ adds a definition of the parameterless macro "implementer-name" that expands to all non-macro definitions produced by the define-type. This is useful to distinguish the two binding times (compile-time and run time). It can be used to avoid duplicate definitions when a file containing a define-type is included in multiple files (I think this problem should be solved through the module system, but this is how the problem can be solved without a module system). For example, let's say the file point-def.scm contains the definition of the point type, and files a.scm and b.scm need to manipulate points. __This currently doesn't work in SchemeSpheres, please see Caveats__.
+* __implementer: <implementer-name>__ adds a definition of the parameterless macro "implementer-name" that expands to all non-macro definitions produced by the define-type. This is useful to distinguish the two binding times (compile-time and run time). It can be used to avoid duplicate definitions when a file containing a define-type is included in multiple files (I think this problem should be solved through the module system, but this is how the problem can be solved without a module system). For example, let's say the file point-def.scm contains the definition of the point type, and files a.scm and b.scm need to manipulate points.
 * __opaque:__ This flag causes a change in the behavior of equal? and equal?-hash. When the opaque: flag is not used, two structures are equal? if they have the same type and each field is equal? in both structures. When the opaque: flag is used, two structures are equal? only if they are eq? (i.e. the same instance).
 
 
@@ -274,11 +274,6 @@ Most of the explanations are taken from [this document](https://mercure.iro.umon
 (pp (equal?-hash y)) ;; -> 206628681
 ~~~
 
-
-
-### Caveats
-
-Until the syntax expander is fixed to allow empty non-quoted null lists __()__, some combinations especially those involving _macros:_ will throw an _Inevaluable datum_ error. This can be fixed extracting the definition into a header that gets compiled in the next compilation phase and not expanded. You can look at how FFI modules are doing it.
 
 
 ## SRFI-99 Records __(object: record)__
